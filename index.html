@@ -113,7 +113,7 @@ section{padding:90px 40px}
 .gallery-item{background:var(--surface);overflow:hidden;cursor:pointer;position:relative;border-radius:14px}
 .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
 .gallery-item:nth-child(4){grid-column:span 2}
-.gallery-item:nth-child(5){grid-column:span 3}
+.gallery-item:nth-child(6){grid-column:span 2}
 .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease}
 .gallery-item:hover img{transform:scale(1.07)}
 .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 55%);display:flex;align-items:flex-end;padding:18px;opacity:0;transition:opacity .3s}
@@ -411,6 +411,9 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
       <div class="gallery-item">
         <img src="gallery/text.jpg" alt="Textúra vágás">
         <div class="gallery-overlay"><span class="gallery-tag">Crop Fade</span></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-overlay" style="opacity:1"><span class="gallery-tag">—</span></div>
       </div>
       <div class="gallery-item">
         <img src="gallery/szakal.jpg" alt="Modern Fade">
