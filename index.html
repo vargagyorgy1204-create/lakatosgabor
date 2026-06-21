@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakatos Gábor — Barber Budapest</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Poppins for modern logo -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#0A0A0A;--dark:#141414;--card:#1C1C1C;--surface:#232323;
+  --rust:#C8602A;--rust-light:#E07040;--cream:#E8E0D5;--gray:#888;
+  --border:#2A2A2A;--white:#F5F0E8;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--cream);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 20px 12px 24px;
+  width:calc(100% - 48px);max-width:920px;
+  background:rgba(14,14,14,0.65);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:50px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.45);
+  transition:background .3s,box-shadow .3s;
+}
+nav.scrolled{background:rgba(14,14,14,0.88);box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+.nav-logo{display:flex;align-items:center;justify-content:center;width:64px;height:40px}
+
+/* SVG stroke monogram (Concept B) */
+.nav-logo svg{display:block;width:64px;height:40px}
+.nav-logo text{font-family:Poppins,Inter,sans-serif;font-weight:700;font-size:32px}
+.nav-logo .lg-l,.nav-logo .lg-g{
+  fill:url(#lgGrad);
+  fill-opacity:0;
+  stroke:url(#lgGrad);
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:200;
+  stroke-dashoffset:200;
+  vector-effect:non-scaling-stroke;
+  transition:transform .2s ease,filter .2s ease,fill-opacity .25s ease;
+}
+.nav-logo .lg-l{animation:strokeDraw 0.9s ease forwards, fillIn .5s ease forwards 0.95s}
+.nav-logo .lg-g{animation:strokeDraw 0.9s ease forwards .12s, fillIn .5s ease forwards 1.05s}
+.nav-logo:hover .lg-l,.nav-logo:hover .lg-g{transform:translateY(-2px) scale(1.06);filter:drop-shadow(0 8px 18px rgba(200,96,42,0.12))}
+@keyframes strokeDraw{to{stroke-dashoffset:0}}
+@keyframes fillIn{to{fill-opacity:1}}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);transition:color .2s}
+.nav-links a:hover{color:var(--cream)}
+.nav-book{padding:9px 22px;background:var(--rust);color:white;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:all .2s;border-radius:50px;border:none}
+.nav-book:hover{background:var(--rust-light);transform:scale(1.04)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:100px 0 110px}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,0.55) 0%,rgba(10,10,10,0.72) 60%,rgba(10,10,10,0.92) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 20px;max-width:800px}
+.hero-tag{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--rust);margin-bottom:20px;display:block;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,120px);line-height:0.88;letter-spacing:2px;color:var(--white);margin-bottom:8px;opacity:0;animation:fadeUp .8s .4s forwards}
+.hero-title span{color:var(--rust)}
+.hero-subtitle{font-size:12px;letter-spacing:7px;text-transform:uppercase;color:rgba(232,224,213,0.7);margin-bottom:40px;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-actions{opacity:0;animation:fadeUp .8s .8s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* SOCIAL BUTTONS */
+.social-grid{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.social-btn{display:flex;align-items:center;gap:8px;padding:11px 22px;border:1px solid var(--border);background:transparent;color:var(--cream);font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .25s;border-radius:12px}
+.social-btn:hover{color:white;transform:translateY(-2px)}
+.social-btn.social-fb:hover{background:#1877F2;border-color:#1877F2}
+.social-btn.social-ig:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-color:#cc2366}
+.social-btn.social-tt:hover{background:#010101;border-color:#69C9D0}
+.social-btn.social-sp:hover{background:#1DB954;border-color:#1DB954}
+.social-btn svg{width:15px;height:15px;flex-shrink:0}
+.cta-btn{display:inline-block;padding:15px 40px;background:var(--rust);color:white;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;border:none;cursor:pointer;transition:all .25s;border-radius:14px}
+.cta-btn:hover{background:var(--rust-light);transform:translateY(-2px)}
+
+/* SCROLL INDICATOR */
+.scroll-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2}
+.scroll-hint span{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#555}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--rust),transparent);animation:scrollPulse 1.5s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease-out,transform .6s ease-out;will-change:opacity,transform}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* SECTION BASE */
+section{padding:90px 40px}
+.section-container{max-width:960px;margin:0 auto}
+.section-eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--rust);margin-bottom:10px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,64px);line-height:1;color:var(--white);margin-bottom:24px}
+.divider{width:40px;height:2px;background:var(--rust);margin:16px 0 36px}
+
+/* ABOUT */
+#about{background:var(--dark)}
+.about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:56px;align-items:center}
+.about-photo{background:var(--surface);border:1px solid var(--border);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:16px}
+.about-photo::before{display:none}
+.photo-placeholder{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:#444;text-align:center}
+.about-text p{font-size:14px;line-height:1.85;color:#A0A0A0;margin-bottom:14px}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.stat-item{border-left:2px solid var(--rust);padding-left:14px}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--white);line-height:1}
+.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:2px}
+
+/* SERVICES */
+#services{background:var(--black)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.service-card{background:var(--card);border:1px solid var(--border);padding:28px 24px;position:relative;overflow:hidden;border-radius:16px;transition:border-color .3s,box-shadow .4s}
+.service-card::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 0deg,transparent 315deg,rgba(200,96,42,.45) 335deg,rgb(255,155,50) 348deg,rgba(200,96,42,.45) 362deg,transparent 380deg);opacity:0;transition:opacity .35s;pointer-events:none}
+.service-card::after{content:'';position:absolute;inset:2px;background:var(--card);border-radius:14px;z-index:1;transition:background .3s}
+.service-card>*{position:relative;z-index:2}
+.service-card:hover{border-color:transparent;box-shadow:0 8px 40px rgba(200,96,42,.35),0 0 0 1px rgba(200,96,42,.25)}
+.service-card:hover::before{opacity:1;animation:beam-orbit 2s linear infinite}
+.service-card:hover::after{background:#202020}
+@keyframes beam-orbit{to{transform:rotate(360deg)}}
+.service-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--white);margin-bottom:8px}
+.service-desc{font-size:12px;color:#666;line-height:1.7;margin-bottom:20px}
+.service-price{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--rust);line-height:1}
+.service-time{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
+
+/* GALLERY */
+#gallery{background:var(--dark)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gallery-item{background:var(--surface);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;cursor:pointer;position:relative;transition:border-color .25s;border-radius:14px}
+.gallery-item:hover{border-color:var(--rust)}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay{position:absolute;inset:0;background:rgba(200,96,42,0.12);display:flex;align-items:flex-end;justify-content:flex-start;padding:16px;opacity:0;transition:opacity .25s}
+.gallery-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:white}
+.gallery-placeholder{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#333}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.gallery-item:hover img{transform:scale(1.04)}
+.gallery-item.tall{grid-row:span 2;aspect-ratio:auto;min-height:200px}
+
+/* REVIEWS */
+#reviews{background:var(--black)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.review-card{background:var(--card);border:1px solid var(--border);padding:28px;position:relative;border-radius:16px}
+.review-card::before{content:'"';font-family:'Bebas Neue',sans-serif;font-size:80px;color:var(--rust);opacity:0.15;position:absolute;top:8px;left:20px;line-height:1}
+.review-stars{color:var(--rust);font-size:13px;margin-bottom:14px;letter-spacing:3px}
+.review-text{font-size:13px;color:#999;line-height:1.75;margin-bottom:18px;font-style:italic;position:relative}
+.review-name{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cream);font-weight:500}
+.review-date{font-size:10px;color:#444;margin-top:2px}
+
+/* BOOKING */
+#booking{background:var(--dark)}
+.booking-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.calendar-wrap{background:var(--card);border:1px solid var(--border);padding:24px;border-radius:16px}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cal-month{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--white)}
+.cal-nav{background:none;border:1px solid var(--border);color:var(--cream);width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1;border-radius:8px}
+.cal-nav:hover{background:var(--rust);border-color:var(--rust)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-day-name{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#444;text-align:center;padding:6px 0}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:all .2s;border-radius:8px}
+.cal-day:hover:not(.booked):not(.other){border-color:var(--rust);color:var(--rust)}
+.cal-day.active{background:var(--rust);color:white;border-color:var(--rust)}
+.cal-day.other{color:#333;cursor:default}
+.cal-day.today{border-color:#444}
+.cal-day.booked{color:#2A2A2A;cursor:not-allowed}
+.time-wrap{margin-top:16px}
+.time-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:10px}
+.time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.time-slot{background:var(--surface);border:1px solid var(--border);padding:7px;font-size:11px;letter-spacing:1px;text-align:center;cursor:pointer;color:var(--cream);transition:all .2s;border-radius:8px}
+.time-slot:hover{border-color:var(--rust);color:var(--rust)}
+.time-slot.selected{background:var(--rust);border-color:var(--rust);color:white}
+.time-slot.taken{color:#2A2A2A;cursor:not-allowed;border-color:transparent;background:transparent}
+.form-wrap{display:flex;flex-direction:column;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
+.form-input{background:var(--card);border:1px solid var(--border);color:var(--cream);padding:12px 14px;font-family:'Inter',sans-serif;font-size:13px;transition:border-color .2s;outline:none;width:100%;border-radius:10px}
+.form-input:focus{border-color:var(--rust)}
+.form-select{background:var(--card);border:1px solid var(--border);color:var(--cream);padding:12px 14px;font-family:'Inter',sans-serif;font-size:13px;outline:none;width:100%;cursor:pointer;-webkit-appearance:none;appearance:none;border-radius:10px}
+.form-select option{background:#1C1C1C}
+.selected-summary{font-size:11px;color:var(--rust);letter-spacing:1px;min-height:16px}
+.submit-btn{width:50%;padding:10px 14px;background:var(--rust);color:white;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;border:none;cursor:pointer;transition:background .25s;margin:12px auto 0;border-radius:10px}
+.submit-btn:hover{background:var(--rust-light)}
+.booking-confirm{display:none;background:var(--card);border:1px solid var(--rust);padding:32px;text-align:center;border-radius:16px}
+.booking-confirm.show{display:block}
+.confirm-check{font-size:36px;color:var(--rust);margin-bottom:10px}
+.confirm-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--white)}
+.confirm-sub{font-size:12px;color:var(--gray);margin-top:6px;line-height:1.6}
+
+/* LOCATION */
+#location{background:var(--black)}
+.location-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+.map-placeholder{background:var(--card);border:1px solid var(--border);height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-radius:16px}
+.map-icon{font-size:36px;color:var(--rust)}
+.map-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
+.map-note{font-size:10px;color:#333}
+.location-info p{font-size:13px;color:#999;line-height:1.85;margin-bottom:10px}
+.location-info strong{color:var(--cream);font-weight:500}
+.hours-table{width:100%;margin-top:20px;border-collapse:collapse}
+.hours-table tr{border-bottom:1px solid var(--border)}
+.hours-table tr:last-child{border-bottom:none}
+.hours-table td{padding:10px 0;font-size:12px;color:var(--gray)}
+.hours-table td:last-child{text-align:right;color:var(--cream);font-weight:500}
+.hours-table .closed{color:#444}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40px;text-align:center}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:5px;color:var(--rust);margin-bottom:6px}
+.footer-sub{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#333;margin-bottom:24px}
+.footer-social{display:flex;gap:10px;justify-content:center;margin-bottom:24px}
+.footer-social a{width:38px;height:38px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:all .2s;border-radius:10px}
+.footer-social a:hover{border-color:var(--rust);color:var(--rust)}
+.footer-copy{font-size:10px;color:#333;letter-spacing:1px}
+.footer-copy a{color:#444;transition:color .2s}
+.footer-copy a:hover{color:var(--rust)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{top:10px;width:calc(100% - 24px);padding:10px 16px}
+  .nav-links{display:none}
+  section{padding:70px 20px}
+  .about-grid{grid-template-columns:1fr}
+  .about-photo{aspect-ratio:4/3}
+  .booking-layout{grid-template-columns:1fr}
+  .location-grid{grid-template-columns:1fr}
+  footer{padding:40px 20px}
+}
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .gallery-item.tall{grid-row:span 1;aspect-ratio:3/4}
+  .social-grid{gap:8px}
+  .social-btn{padding:9px 14px;font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 80 44" width="64" height="40" aria-label="LG logo" role="img">
+      <defs>
+        <linearGradient id="lgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#C8602A"/>
+          <stop offset="55%" stop-color="#E07040"/>
+          <stop offset="100%" stop-color="#F5E9DA"/>
+        </linearGradient>
+      </defs>
+      <text class="lg-l" x="6" y="34">L</text>
+      <text class="lg-g" x="34" y="34">G</text>
+    </svg>
+  </div>
+    <div class="nav-links">
+    <a href="#about">Rólam</a>
+    <a href="#services">Árak</a>
+    <a href="#gallery">Galeria</a>
+    <a href="#reviews">Velemenyek</a>
+    <a href="#booking">Foglalás</a>
+    <a href="#location">Kapcsolat</a>
+  </div>
+  <a href="#booking" class="nav-book">Időpontot foglalok</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- ВІДЕО: замініть src на свій файл або залиште посилання Pexels -->
+  <!-- Безкоштовне відео: https://www.pexels.com/search/videos/barber%20shop/ -->
+  <video class="hero-video" autoplay muted loop playsinline poster="">
+    <source src="7697544-hd_1920_1080_30fps.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+  <span class="hero-tag">Budapest - Profi Fodrász</span>
+  <div class="hero-title">LAKATOS<br><span>GÁBOR</span></div>
+  <div class="hero-subtitle">Barber &amp; Hajstylist</div>
+
+    <div class="hero-actions">
+      <div class="social-grid">
+        <a class="social-btn social-fb" href="https://facebook.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg>
+          Facebook
+        </a>
+        <a class="social-btn social-ig" href="https://instagram.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+        <a class="social-btn social-tt" href="https://tiktok.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          TikTok
+        </a>
+        <a class="social-btn social-sp" href="https://open.spotify.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Spotify
+        </a>
+      </div>
+      <a href="#booking" class="cta-btn">Időpontot foglalok</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-container">
+    <div class="about-grid">
+      <div class="about-photo">
+        <img src="akatosgabor.png" alt="Lakatos Gábor" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="about-text">
+        <div class="section-eyebrow">Rólam</div>
+        <h2 class="section-title">TÖBB MINT EGY HAJVÁGÁS</h2>
+        <p>Lakatos Gábor vagyok, professzionális barber Budapestről. 3 év tapasztalattal a hátam mögött hiszek abban, hogy egy jó vágás nem csupán stílus — ez az önbizalom kezdete.</p>
+        <p>Specialitásom a klasszikus barber technikák és a modern street stílusok ötvözése. Minden ügyfelem egyedi, ezért minden vágást egyedileg tervezek meg — a konzultációtól a befejezésig.</p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Ev tapasztalat</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">2K+</div>
+              <div class="stat-label">Elegedett ügyfél</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">Elvegzett vágás</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">4.9★</div>
+            <div class="stat-label">Átlagos értékelés</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-container">
+    <div class="section-eyebrow">Szolgáltatások &amp; Árak</div>
+    <h2 class="section-title">AMIT KÍNÁLOK</h2>
+    <div class="services-grid">
+        <div class="service-card">
+        <div class="service-name">Klasszikus Hajvágás</div>
+        <div class="service-desc">Precíz vágás, mosás és formázás — az alap, amit tökéletesen csinálunk.</div>
+        <div class="service-price">8 000 Ft</div>
+        <div class="service-time">≈ 45 perc</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">Szakáll Igazítás</div>
+        <div class="service-desc">Formázás, kontúr, borotválás — a részletek számítanak.</div>
+        <div class="service-price">4 000 Ft</div>
+        <div class="service-time">≈ 30 perc</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">Hajvágás + Szakáll</div>
+        <div class="service-desc">Teljes pakett — hajtól szakállig, egy ülésben, kedvező áron.</div>
+        <div class="service-price">10 500 Ft</div>
+        <div class="service-time">≈ 70 perc</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">Fade Vágás</div>
+        <div class="service-desc">Skin fade, low, mid, high — bármilyen gradiensben, precízen.</div>
+        <div class="service-price">8 500 Ft</div>
+        <div class="service-time">≈ 55 perc</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">Klasszikus Borotválás</div>
+        <div class="service-desc">Forró törülközős, klasszikus borotvával — igazi premium élmény.</div>
+        <div class="service-price">3 000 Ft</div>
+        <div class="service-time">≈ 40 perc</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">Gyerek Hajvágás</div>
+        <div class="service-desc">14 év alattiaknak, türelmesen és precízen. Szülők szívesen látottak.</div>
+        <div class="service-price">2 500 Ft</div>
+        <div class="service-time">≈ 35 perc</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-container">
+    <div class="section-eyebrow">Munkáim</div>
+    <h2 class="section-title">GALERIA</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item tall">
+        <img src="gallery/01.jpg" alt="Skin Fade" onerror="this.style.display='none'">
+        <div class="gallery-overlay"><span class="gallery-tag">Skin Fade</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="gallery/02.jpg" alt="Klasszikus vágás" onerror="this.style.display='none'">
+        <div class="gallery-overlay"><span class="gallery-tag">Klasszikus</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="gallery/03.jpg" alt="Szakáll igazítás" onerror="this.style.display='none'">
+        <div class="gallery-overlay"><span class="gallery-tag">Szakáll</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="gallery/04.jpg" alt="Textúra vágás" onerror="this.style.display='none'">
+        <div class="gallery-overlay"><span class="gallery-tag">Textúra Vágás</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="gallery/05.jpg" alt="Modern Fade" onerror="this.style.display='none'">
+        <div class="gallery-overlay"><span class="gallery-tag">Modern Fade</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="gallery/06.jpg" alt="Crop Top" onerror="this.style.display='none'">
+        <div class="gallery-overlay"><span class="gallery-tag">Crop Top</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-container">
+    <div class="section-eyebrow">Velemenyek</div>
+    <h2 class="section-title">MIT MONDANAK</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">Gábornál jártam először, és nem fogok máshová menni. Pontosan azt kapta, amit kért. Profi, gyors, barátságos légkör.</div>
+        <div class="review-name">Kovács Péter</div>
+        <div class="review-date">Google · 2026 május</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">Az online foglalás szuper egyszerű, és mindig pontosan kezdik az időpontot. A fade vágásban abszolút mester.</div>
+        <div class="review-name">Nagy Ádám</div>
+        <div class="review-date">Google · 2026 április</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">Féltem az első barber látogatástól, de Gábor megmagyarázott mindent. Baromi jól éreztem magam. Visszajövök!</div>
+        <div class="review-name">Horváth Bence</div>
+        <div class="review-date">Facebook · 2026 március</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="section-container">
+    <div class="section-eyebrow">Online Foglalás</div>
+    <h2 class="section-title">IDŐPONTOT FOGLALOK</h2>
+    <div class="booking-layout">
+      <!-- CALENDAR -->
+      <div>
+        <div class="calendar-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" id="prevMonth">&#8249;</button>
+            <div class="cal-month" id="calMonthTitle"></div>
+            <button class="cal-nav" id="nextMonth">&#8250;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+        <div class="time-wrap">
+          <div class="time-label">Szabad időpontok — <span id="selectedDateLabel">Válassz egy napot</span></div>
+          <div class="time-slots" id="timeSlots">
+            <div style="font-size:11px;color:#333;grid-column:1/-1;text-align:center;padding:20px 0">Kattints egy dátumra</div>
+          </div>
+        </div>
+      </div>
+      <!-- FORM -->
+      <div>
+        <div class="form-wrap" id="bookingForm">
+          <div class="form-group">
+            <label class="form-label">Teljes neved *</label>
+            <input type="text" class="form-input" id="bookName" placeholder="pl. Kovács János">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefonszám *</label>
+            <input type="tel" class="form-input" id="bookPhone" placeholder="+36 20 123 4567">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email cím</label>
+            <input type="email" class="form-input" id="bookEmail" placeholder="pelda@email.hu">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Szolgáltatás *</label>
+            <select class="form-select" id="bookService">
+              <option value="">— Válassz szolgáltatást —</option>
+              <option value="klasszikus">Klasszikus Hajvágás — 3 500 Ft</option>
+              <option value="szakall">Szakáll Igazítás — 2 500 Ft</option>
+              <option value="csomag">Hajvágás + Szakáll — 5 500 Ft</option>
+              <option value="fade">Fade Vágás — 4 500 Ft</option>
+              <option value="borotvalas">Klasszikus Borotválás — 3 000 Ft</option>
+              <option value="gyerek">Gyerek Hajvágás — 2 500 Ft</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Üzenet (opcionális)</label>
+            <textarea class="form-input" id="bookMsg" rows="3" placeholder="Pl. speciális kérés, referencia kép..." style="resize:none"></textarea>
+          </div>
+          <div class="selected-summary" id="selectedSummary"></div>
+          <button class="submit-btn" onclick="submitBooking()">FOGLALÁS MEGERŐSÍTÉSE</button>
+        </div>
+        <div class="booking-confirm" id="bookingConfirm">
+          <div class="confirm-check">✔</div>
+          <div class="confirm-title">FOGLALÁS SIKERES!</div>
+          <div class="confirm-sub" id="confirmDetails">Hamarosan visszaigazolást küldünk emailben és SMS-ben.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="section-container">
+    <div class="section-eyebrow">Helyszín &amp; Kapcsolat</div>
+    <h2 class="section-title">HOL TALÁLSZ</h2>
+    <div class="location-grid">
+      <div>
+        <!-- REPLACE this div with Google Maps embed:
+        <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="280" style="border:1px solid #2A2A2A;filter:grayscale(1) invert(0.9)" allowfullscreen loading="lazy"></iframe>
+        -->
+        <div class="map-placeholder">
+          <div class="map-icon">📍</div>
+          <div class="map-label">Google Maps Embed</div>
+          <div class="map-note">Ide kerül a térkép beágyazás</div>
+        </div>
+      </div>
+      <div class="location-info">
+        <p><strong>Lakatos Barber Studio</strong></p>
+        <p>1075 Budapest,<br>Király utca 42.<br>II. emelet, 8-as ajtó</p>
+        <p style="margin-top:16px">
+          <strong>Telefon:</strong><br>
+          <a href="tel:+36301234567" style="color:#999;transition:color .2s" onmouseover="this.style.color='#C8602A'" onmouseout="this.style.color='#999'">+36 30 123 4567</a>
+        </p>
+        <p>
+          <strong>Email:</strong><br>
+          <a href="mailto:info@lakatosbarbershop.hu" style="color:#999;transition:color .2s" onmouseover="this.style.color='#C8602A'" onmouseout="this.style.color='#999'">info@lakatosbarbershop.hu</a>
+        </p>
+        <table class="hours-table">
+          <tr><td>Hétfő – Péntek</td><td><strong>09:00 – 19:00</strong></td></tr>
+          <tr><td>Szombat</td><td><strong>09:00 – 17:00</strong></td></tr>
+          <tr><td>Vasárnap</td><td class="closed"><strong>Zárva</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LAKATOS GÁBOR</div>
+  <div class="footer-sub">Barber &amp; Hajstylist · Budapest</div>
+  <div class="footer-social">
+    <a href="https://facebook.com" target="_blank" rel="noopener" title="Facebook">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg>
+    </a>
+    <a href="https://instagram.com" target="_blank" rel="noopener" title="Instagram">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://tiktok.com" target="_blank" rel="noopener" title="TikTok">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+    </a>
+    <a href="https://open.spotify.com" target="_blank" rel="noopener" title="Spotify">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+    </a>
+  </div>
+  <div class="footer-copy">© 2026 Lakatos Gábor · Minden jog fenntartva · <a href="https://varbro.pro" target="_blank">Made by VarBro</a></div>
+</footer>
+
+<script>
+// ─── CALENDAR ───────────────────────────────────────────
+const MONTHS=['JANUÁR','FEBRUÁR','MÁRCIUS','ÁPRILIS','MÁJUS','JÚNIUS','JÚLIUS','AUGUSZTUS','SZEPTEMBER','OKTÓBER','NOVEMBER','DECEMBER'];
+const DAYS_HU=['H','K','Sze','Cs','P','Szo','V'];
+const ALL_TIMES=['09:00','09:45','10:30','11:15','12:00','13:00','13:45','14:30','15:15','16:00','16:45','17:30'];
+
+// Demo: foglalt napok és időpontok — valós rendszernél backend API
+const BOOKED_DAYS=[3,7,14,21,28];
+const TAKEN_MAP={
+  5:['09:00','10:30','14:30'],
+  10:['11:15','13:00','16:00'],
+  15:['09:45','12:00','15:15'],
+  20:['10:30','14:30','17:30'],
+  22:['09:00','09:45','10:30','11:15','13:00','13:45','14:30','15:15']
+};
+
+let currentYear=2026, currentMonth=5; // 0-based: 5 = június
+let selectedDay=null, selectedTime=null;
+
+function renderCalendar(){
+  const grid=document.getElementById('calGrid');
+  document.getElementById('calMonthTitle').textContent=MONTHS[currentMonth]+' '+currentYear;
+  grid.innerHTML='';
+
+  DAYS_HU.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='cal-day-name';
+    el.textContent=d;
+    grid.appendChild(el);
+  });
+
+  const firstDay=new Date(currentYear,currentMonth,1).getDay();
+  const offset=firstDay===0?6:firstDay-1;
+  const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+  const prevDays=new Date(currentYear,currentMonth,0).getDate();
+  const today=new Date();
+
+  for(let i=0;i<offset;i++){
+    const el=document.createElement('div');
+    el.className='cal-day other';
+    el.textContent=prevDays-offset+1+i;
+    grid.appendChild(el);
+  }
+
+  for(let d=1;d<=daysInMonth;d++){
+    const el=document.createElement('div');
+    const isToday=today.getDate()===d&&today.getMonth()===currentMonth&&today.getFullYear()===currentYear;
+    const isBooked=BOOKED_DAYS.includes(d);
+    const isFullyTaken=TAKEN_MAP[d]&&TAKEN_MAP[d].length===ALL_TIMES.length;
+
+    if(isBooked||isFullyTaken){
+      el.className='cal-day booked';
+    } else {
+      el.className='cal-day'+(isToday?' today':'');
+      if(selectedDay===d&&currentMonth===currentMonth&&currentYear===currentYear){
+        el.classList.add('active');
+      }
+      el.addEventListener('click',()=>selectDay(d,el));
+    }
+    el.textContent=d;
+    grid.appendChild(el);
+  }
+}
+
+function selectDay(d,el){
+  document.querySelectorAll('.cal-day.active').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  selectedDay=d;
+  selectedTime=null;
+
+  document.getElementById('selectedDateLabel').textContent=
+    d+'. '+MONTHS[currentMonth].toLowerCase().replace('á','a').replace('é','e')+'.'
+
+  renderTimeSlots(d);
+  updateSummary();
+}
+
+function renderTimeSlots(d){
+  const wrap=document.getElementById('timeSlots');
+  wrap.innerHTML='';
+  const taken=TAKEN_MAP[d]||[];
+  ALL_TIMES.forEach(t=>{
+    const el=document.createElement('div');
+    if(taken.includes(t)){
+      el.className='time-slot taken';
+      el.textContent=t;
+    } else {
+      el.className='time-slot';
+      el.textContent=t;
+      el.addEventListener('click',()=>selectTime(t,el));
+    }
+    wrap.appendChild(el);
+  });
+}
+
+function selectTime(t,el){
+  document.querySelectorAll('.time-slot.selected').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime=t;
+  updateSummary();
+}
+
+function updateSummary(){
+  const s=document.getElementById('selectedSummary');
+  if(selectedDay&&selectedTime){
+    s.textContent='Kiválasztott időpont: '+selectedDay+'. — '+selectedTime;
+  } else if(selectedDay){
+    s.textContent='Válassz időpontot a naptárból';
+  } else {
+    s.textContent='';
+  }
+}
+
+function submitBooking(){
+  const name=document.getElementById('bookName').value.trim();
+  const phone=document.getElementById('bookPhone').value.trim();
+  const service=document.getElementById('bookService').value;
+
+  if(!name){alert('Kérlek add meg a neved!');return;}
+  if(!phone){alert('Kérlek add meg a telefonszámod!');return;}
+  if(!service){alert('Kérlek válassz egy szolgáltatást!');return;}
+  if(!selectedDay){alert('Kérlek válassz egy dátumot a naptárból!');return;}
+  if(!selectedTime){alert('Kérlek válassz egy időpontot!');return;}
+
+  document.getElementById('bookingForm').style.display='none';
+  const confirm=document.getElementById('bookingConfirm');
+  confirm.classList.add('show');
+  document.getElementById('confirmDetails').innerHTML=
+    '<strong style="color:#E8E0D5">'+name+'</strong><br>'+
+    selectedDay+'. '+MONTHS[currentMonth]+' '+currentYear+' — '+selectedTime+'<br><br>'+
+    'Hamarosan visszaigazolást küldünk emailben és SMS-ben.<br>'+
+    '<span style="color:#C8602A">info@lakatosbarbershop.hu · +36 30 123 4567</span>';
+}
+
+document.getElementById('prevMonth').addEventListener('click',()=>{
+  currentMonth--;
+  if(currentMonth<0){currentMonth=11;currentYear--;}
+  selectedDay=null;selectedTime=null;
+  renderCalendar();
+  document.getElementById('timeSlots').innerHTML='<div style="font-size:11px;color:#333;grid-column:1/-1;text-align:center;padding:20px 0">Kattints egy dátumra</div>';
+  document.getElementById('selectedDateLabel').textContent='Válassz egy napot';
+  updateSummary();
+});
+
+document.getElementById('nextMonth').addEventListener('click',()=>{
+  currentMonth++;
+  if(currentMonth>11){currentMonth=0;currentYear++;}
+  selectedDay=null;selectedTime=null;
+  renderCalendar();
+  document.getElementById('timeSlots').innerHTML='<div style="font-size:11px;color:#333;grid-column:1/-1;text-align:center;padding:20px 0">Kattints egy dátumra</div>';
+  document.getElementById('selectedDateLabel').textContent='Válassz egy napot';
+  updateSummary();
+});
+
+renderCalendar();
+
+// ─── NAV SCROLL ────────────────────────────────────────
+const navEl=document.querySelector('nav');
+window.addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled',window.scrollY>60);
+},{ passive:true });
+
+// ─── SCROLL REVEAL ─────────────────────────────────────
+;(function(){
+  // Single-element targets (eyebrow, title, pairs)
+  const singles=[
+    '#about .section-eyebrow','#about .section-title',
+    '.about-photo','.about-text',
+    '#services .section-eyebrow','#services .section-title',
+    '#gallery .section-eyebrow','#gallery .section-title',
+    '#reviews .section-eyebrow','#reviews .section-title',
+    '#booking .section-eyebrow','#booking .section-title',
+    '.calendar-wrap','.form-wrap',
+    '#location .section-eyebrow','#location .section-title',
+    '.location-grid',
+  ];
+  singles.forEach(sel=>{
+    document.querySelectorAll(sel).forEach(el=>el.classList.add('reveal'));
+  });
+
+  // Stagger delay for paired elements
+  [
+    ['.about-photo','.about-text'],
+    ['.calendar-wrap','.form-wrap'],
+  ].forEach(pair=>{
+    pair.forEach((sel,i)=>{
+      const el=document.querySelector(sel);
+      if(el) el.style.transitionDelay=(i*100)+'ms';
+    });
+  });
+
+  // Grid items — stagger by position
+  ['.services-grid','.gallery-grid','.reviews-grid'].forEach(gridSel=>{
+    const grid=document.querySelector(gridSel);
+    if(!grid) return;
+    Array.from(grid.children).forEach((child,i)=>{
+      child.classList.add('reveal');
+      child.style.transitionDelay=(i*80)+'ms';
+    });
+  });
+
+  // Single observer for everything
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
