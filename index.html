@@ -144,13 +144,21 @@ section{padding:90px 40px}
 
 /* REVIEWS */
 #reviews{background:var(--black)}
-.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.review-card{background:var(--card);border:1px solid var(--border);padding:28px;position:relative;border-radius:16px}
-.review-card::before{content:'"';font-family:'Bebas Neue',sans-serif;font-size:80px;color:var(--rust);opacity:0.15;position:absolute;top:8px;left:20px;line-height:1}
-.review-stars{color:var(--rust);font-size:13px;margin-bottom:14px;letter-spacing:3px}
-.review-text{font-size:13px;color:#999;line-height:1.75;margin-bottom:18px;font-style:italic;position:relative}
+.reviews-wrap{position:relative}
+.reviews-scroll{display:flex;gap:16px;overflow-x:auto;padding:4px 2px 24px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.reviews-scroll::-webkit-scrollbar{display:none}
+.reviews-nav{display:flex;gap:10px;justify-content:flex-end;margin-bottom:20px}
+.reviews-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s;flex-shrink:0}
+.reviews-btn:hover{border-color:var(--rust);background:rgba(200,96,42,.1)}
+.reviews-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.review-card{background:var(--card);border:1px solid var(--border);padding:28px 26px;border-radius:16px;min-width:310px;max-width:310px;flex-shrink:0;scroll-snap-align:start;display:flex;flex-direction:column;position:relative}
+.review-quote{font-family:'Bebas Neue',sans-serif;font-size:80px;color:var(--rust);opacity:.18;line-height:.75;margin-bottom:8px}
+.review-text{font-size:13px;color:#aaa;line-height:1.8;font-style:italic;flex:1;margin-bottom:20px}
+.review-footer{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border)}
+.review-avatar{width:40px;height:40px;border-radius:50%;background:rgba(200,96,42,.12);border:1px solid rgba(200,96,42,.28);display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:1px;color:var(--rust);font-weight:700;flex-shrink:0}
 .review-name{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cream);font-weight:500}
-.review-date{font-size:10px;color:#444;margin-top:2px}
+.review-stars{color:var(--rust);font-size:11px;letter-spacing:2px;margin-top:3px}
+.review-source{font-size:10px;color:#444;margin-top:3px}
 
 /* BOOKING */
 #booking{background:var(--dark)}
@@ -430,25 +438,89 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
   <div class="section-container">
     <div class="section-eyebrow">Velemenyek</div>
     <h2 class="section-title">MIT MONDANAK</h2>
-    <div class="reviews-grid">
+    <div class="reviews-wrap">
+    <div class="reviews-nav">
+      <button class="reviews-btn" id="rev-prev" aria-label="Előző">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="reviews-btn" id="rev-next" aria-label="Következő">
+        <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+    </div>
+    <div class="reviews-scroll">
       <div class="review-card">
-        <div class="review-stars">★★★★★</div>
+        <div class="review-quote">"</div>
         <div class="review-text">Gábornál jártam először, és nem fogok máshová menni. Pontosan azt kapta, amit kért. Profi, gyors, barátságos légkör.</div>
-        <div class="review-name">Kovács Péter</div>
-        <div class="review-date">Google · 2026 május</div>
+        <div class="review-footer">
+          <div class="review-avatar">KP</div>
+          <div>
+            <div class="review-name">Kovács Péter</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-source">Google · 2026 május</div>
+          </div>
+        </div>
       </div>
       <div class="review-card">
-        <div class="review-stars">★★★★★</div>
+        <div class="review-quote">"</div>
         <div class="review-text">Az online foglalás szuper egyszerű, és mindig pontosan kezdik az időpontot. A fade vágásban abszolút mester.</div>
-        <div class="review-name">Nagy Ádám</div>
-        <div class="review-date">Google · 2026 április</div>
+        <div class="review-footer">
+          <div class="review-avatar">NÁ</div>
+          <div>
+            <div class="review-name">Nagy Ádám</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-source">Google · 2026 április</div>
+          </div>
+        </div>
       </div>
       <div class="review-card">
-        <div class="review-stars">★★★★★</div>
+        <div class="review-quote">"</div>
         <div class="review-text">Féltem az első barber látogatástól, de Gábor megmagyarázott mindent. Baromi jól éreztem magam. Visszajövök!</div>
-        <div class="review-name">Horváth Bence</div>
-        <div class="review-date">Facebook · 2026 március</div>
+        <div class="review-footer">
+          <div class="review-avatar">HB</div>
+          <div>
+            <div class="review-name">Horváth Bence</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-source">Facebook · 2026 március</div>
+          </div>
+        </div>
       </div>
+      <div class="review-card">
+        <div class="review-quote">"</div>
+        <div class="review-text">A szakáll igazítás tökéletes lett. Látszik, hogy Gábor nem siet, mindent precízen csinál. Már a harmadik alkalom, és minden egyes alkalommal elégedett vagyok.</div>
+        <div class="review-footer">
+          <div class="review-avatar">SM</div>
+          <div>
+            <div class="review-name">Szabó Márk</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-source">Google · 2026 február</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-quote">"</div>
+        <div class="review-text">Kellemes hely, klassz zene, és a munka is kiváló. Gábor tud hallgatni és pontosan érti, mit szeretne az ember. Mindenkinek ajánlom!</div>
+        <div class="review-footer">
+          <div class="review-avatar">KB</div>
+          <div>
+            <div class="review-name">Kiss Balázs</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-source">Facebook · 2026 január</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-quote">"</div>
+        <div class="review-text">Régóta kerestem egy megbízható borbélyt. Gábornál megtaláltam. Az eredmény mindig egységes, soha nem kell aggódni, hogy milyen lesz.</div>
+        <div class="review-footer">
+          <div class="review-avatar">TD</div>
+          <div>
+            <div class="review-name">Tóth Dávid</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-source">Google · 2025 december</div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -508,7 +580,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
             <textarea class="form-input" id="bookMsg" rows="3" placeholder="Pl. speciális kérés, referencia kép..." style="resize:none"></textarea>
           </div>
           <div class="selected-summary" id="selectedSummary"></div>
-          <button class="submit-btn" onclick="submitBooking()">FOGLALÁS MEGERŐSÍTÉSE</button>
+          <button class="submit-btn" onclick="submitBooking()">FOGLALÁS</button>
         </div>
         <div class="booking-confirm" id="bookingConfirm">
           <div class="confirm-check">✔</div>
@@ -770,7 +842,7 @@ window.addEventListener('scroll',()=>{
   });
 
   // Grid items — stagger by position
-  ['.services-grid','.gallery-grid','.reviews-grid'].forEach(gridSel=>{
+  ['.services-grid','.gallery-grid','.reviews-scroll'].forEach(gridSel=>{
     const grid=document.querySelector(gridSel);
     if(!grid) return;
     Array.from(grid.children).forEach((child,i)=>{
@@ -790,6 +862,19 @@ window.addEventListener('scroll',()=>{
   },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
 
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+// Reviews nav buttons
+(function(){
+  const scroll=document.querySelector('.reviews-scroll');
+  if(!scroll) return;
+  const cardW=scroll.querySelector('.review-card')?.offsetWidth+16||326;
+  document.getElementById('rev-prev')?.addEventListener('click',()=>{
+    scroll.scrollBy({left:-cardW,behavior:'smooth'});
+  });
+  document.getElementById('rev-next')?.addEventListener('click',()=>{
+    scroll.scrollBy({left:cardW,behavior:'smooth'});
+  });
 })();
 </script>
 </body>
