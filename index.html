@@ -145,7 +145,7 @@ section{padding:90px 40px}
 
 /* BOOKING */
 #booking{background:var(--dark)}
-.booking-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.booking-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:stretch}
 .calendar-wrap{background:var(--card);border:1px solid var(--border);padding:24px;border-radius:16px}
 .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .cal-month{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--white)}
@@ -166,7 +166,7 @@ section{padding:90px 40px}
 .time-slot:hover{border-color:var(--rust);color:var(--rust)}
 .time-slot.selected{background:var(--rust);border-color:var(--rust);color:white}
 .time-slot.taken{color:#2A2A2A;cursor:not-allowed;border-color:transparent;background:transparent}
-.form-wrap{display:flex;flex-direction:column;gap:14px;background:var(--card);border:1px solid var(--border);padding:24px;border-radius:16px}
+.form-wrap{display:flex;flex-direction:column;gap:14px;background:var(--card);border:1px solid var(--border);padding:24px;border-radius:16px;height:100%}
 .form-group{display:flex;flex-direction:column;gap:6px}
 .form-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
 .form-input{background:var(--card);border:1px solid var(--border);color:var(--cream);padding:12px 14px;font-family:'Inter',sans-serif;font-size:13px;transition:border-color .2s;outline:none;width:100%;border-radius:10px}
@@ -532,8 +532,8 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
     <h2 class="section-title">IDŐPONTOT FOGLALOK</h2>
     <div class="booking-layout">
       <!-- CALENDAR -->
-      <div>
-        <div class="calendar-wrap">
+      <div style="display:flex;flex-direction:column">
+        <div class="calendar-wrap" style="flex:1">
           <div class="cal-header">
             <button class="cal-nav" id="prevMonth">&#8249;</button>
             <div class="cal-month" id="calMonthTitle"></div>
@@ -549,7 +549,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
         </div>
       </div>
       <!-- FORM -->
-      <div>
+      <div style="display:flex;flex-direction:column">
         <div class="form-wrap" id="bookingForm">
           <div class="form-group">
             <label class="form-label">Teljes neved *</label>
@@ -575,12 +575,14 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
               <option value="gyerek">Gyerek Hajvágás — 2 500 Ft</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="flex:1;display:flex;flex-direction:column">
             <label class="form-label">Üzenet (opcionális)</label>
-            <textarea class="form-input" id="bookMsg" rows="3" placeholder="Pl. speciális kérés, referencia kép..." style="resize:none"></textarea>
+            <textarea class="form-input" id="bookMsg" placeholder="Pl. speciális kérés, referencia kép..." style="resize:none;flex:1;min-height:80px"></textarea>
           </div>
-          <div class="selected-summary" id="selectedSummary"></div>
-          <button class="submit-btn" onclick="submitBooking()">FOGLALÁS</button>
+          <div style="margin-top:auto">
+            <div class="selected-summary" id="selectedSummary" style="margin-bottom:10px"></div>
+            <button class="submit-btn" onclick="submitBooking()">FOGLALÁS</button>
+          </div>
         </div>
         <div class="booking-confirm" id="bookingConfirm">
           <div class="confirm-check">✔</div>
@@ -650,7 +652,7 @@ const DAYS_HU=['H','K','Sze','Cs','P','Szo','V'];
 const ALL_TIMES=['09:00','09:45','10:30','11:15','12:00','13:00','13:45','14:30','15:15','16:00','16:45','17:30'];
 
 // Demo: foglalt napok és időpontok — valós rendszernél backend API
-const BOOKED_DAYS=[3,7,14,21,28];
+const BOOKED_DAYS=[3,7,14,28];
 const TAKEN_MAP={
   5:['09:00','10:30','14:30'],
   10:['11:15','13:00','16:00'],
@@ -798,6 +800,19 @@ document.getElementById('nextMonth').addEventListener('click',()=>{
 });
 
 renderCalendar();
+
+// Auto-select first available day (today or next)
+(function(){
+  const avail=Array.from(document.querySelectorAll('.cal-day')).filter(
+    el=>!el.classList.contains('other')&&!el.classList.contains('booked')
+  );
+  if(avail.length){
+    const t=new Date();
+    const todayD=t.getFullYear()===currentYear&&t.getMonth()===currentMonth?t.getDate():1;
+    const pick=avail.find(el=>Number(el.textContent)>=todayD)||avail[0];
+    selectDay(Number(pick.textContent),pick);
+  }
+})();
 
 // ─── NAV SCROLL ────────────────────────────────────────
 const navEl=document.querySelector('nav');
