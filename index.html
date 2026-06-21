@@ -206,10 +206,24 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
 .footer-copy a{color:#444;transition:color .2s}
 .footer-copy a:hover{color:var(--rust)}
 
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--cream);border-radius:2px;transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;background:rgba(10,10,10,.97);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px)}
+.mobile-menu.open{opacity:1;pointer-events:all}
+.mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;color:var(--cream);transition:color .2s;text-align:center}
+.mobile-menu a:hover{color:var(--rust)}
+.mob-book-btn{margin-top:12px;padding:14px 44px;background:var(--rust) !important;color:white !important;border-radius:50px;font-size:22px !important}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   nav{top:10px;width:calc(100% - 24px);padding:10px 16px}
   .nav-links{display:none}
+  .nav-book{display:none}
+  .hamburger{display:flex}
   section{padding:70px 20px}
   .about-grid{grid-template-columns:1fr}
   .about-photo{aspect-ratio:4/3}
@@ -242,7 +256,20 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
     <a href="#location">Kapcsolat</a>
   </div>
   <a href="#booking" class="nav-book">Időpontot foglalok</a>
+  <button class="hamburger" id="hamburger" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">Rólam</a>
+  <a href="#services">Árak</a>
+  <a href="#gallery">Galeria</a>
+  <a href="#reviews">Vélemények</a>
+  <a href="#booking">Foglalás</a>
+  <a href="#location">Kapcsolat</a>
+  <a href="#booking" class="mob-book-btn">Időpontot foglalok</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -837,6 +864,25 @@ window.addEventListener('scroll',()=>{
   });
   document.getElementById('rev-next')?.addEventListener('click',()=>{
     scroll.scrollBy({left:cardW,behavior:'smooth'});
+  });
+})();
+
+// Hamburger menu
+(function(){
+  const ham=document.getElementById('hamburger');
+  const mob=document.getElementById('mobileMenu');
+  if(!ham||!mob) return;
+  ham.addEventListener('click',()=>{
+    ham.classList.toggle('open');
+    mob.classList.toggle('open');
+    document.body.style.overflow=mob.classList.contains('open')?'hidden':'';
+  });
+  mob.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      ham.classList.remove('open');
+      mob.classList.remove('open');
+      document.body.style.overflow='';
+    });
   });
 })();
 </script>
