@@ -53,7 +53,7 @@ nav.scrolled{background:rgba(14,14,14,0.88);box-shadow:0 12px 40px rgba(0,0,0,0.
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
 /* SOCIAL BUTTONS */
-.social-grid{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.social-grid{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
 .social-btn{display:flex;align-items:center;gap:8px;padding:11px 22px;border:1px solid var(--border);background:transparent;color:var(--cream);font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .25s;border-radius:12px}
 .social-btn:hover{color:white;transform:translateY(-2px)}
 .social-btn.social-fb:hover{background:#1877F2;border-color:#1877F2}
@@ -67,11 +67,6 @@ nav.scrolled{background:rgba(14,14,14,0.88);box-shadow:0 12px 40px rgba(0,0,0,0.
 .cta-btn:hover::before{animation:shimmer .65s ease forwards}
 @keyframes shimmer{to{left:160%}}
 
-/* SCROLL INDICATOR */
-.scroll-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2}
-.scroll-hint span{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#555}
-.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--rust),transparent);animation:scrollPulse 1.5s ease-in-out infinite}
-@keyframes scrollPulse{0%,100%{opacity:0.3}50%{opacity:1}}
 
 /* SCROLL REVEAL */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease-out,transform .6s ease-out;will-change:opacity,transform}
@@ -311,10 +306,6 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
     </div>
   </div>
 
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
 </section>
 
 <!-- ABOUT -->
