@@ -201,11 +201,10 @@ section{padding:90px 40px}
 
 /* LOCATION */
 #location{background:var(--black)}
-.location-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
-.map-placeholder{background:var(--card);border:1px solid var(--border);height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-radius:16px}
-.map-icon{font-size:36px;color:var(--rust)}
-.map-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
-.map-note{font-size:10px;color:#333}
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:stretch}
+.map-wrap{border-radius:16px;overflow:hidden;border:1px solid var(--border);min-height:360px}
+.map-wrap iframe{width:100%;height:100%;display:block;min-height:360px;filter:grayscale(1) brightness(.75) contrast(1.1)}
+.location-info{background:var(--card);border:1px solid var(--border);padding:28px;border-radius:16px}
 .location-info p{font-size:13px;color:#999;line-height:1.85;margin-bottom:10px}
 .location-info strong{color:var(--cream);font-weight:500}
 .hours-table{width:100%;margin-top:20px;border-collapse:collapse}
@@ -598,15 +597,8 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
     <div class="section-eyebrow">Helyszín</div>
     <h2 class="section-title">HOL TALÁLSZ</h2>
     <div class="location-grid">
-      <div>
-        <!-- REPLACE this div with Google Maps embed:
-        <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="280" style="border:1px solid #2A2A2A;filter:grayscale(1) invert(0.9)" allowfullscreen loading="lazy"></iframe>
-        -->
-        <div class="map-placeholder">
-          <div class="map-icon">📍</div>
-          <div class="map-label">Google Maps Embed</div>
-          <div class="map-note">Ide kerül a térkép beágyazás</div>
-        </div>
+      <div class="map-wrap">
+        <iframe src="https://maps.google.com/maps?q=1075+Budapest,+Király+utca+42&t=&z=16&ie=UTF8&iwloc=&output=embed" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <div class="location-info">
         <p><strong>Lakatos Barber Studio</strong></p>
