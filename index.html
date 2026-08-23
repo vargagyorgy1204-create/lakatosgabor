@@ -69,7 +69,7 @@ nav.scrolled{background:rgba(14,14,14,0.88);box-shadow:0 12px 40px rgba(0,0,0,0.
 
 
 /* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease-out,transform .6s ease-out;will-change:opacity,transform}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .35s ease-out,transform .35s ease-out;will-change:opacity,transform}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* SECTION BASE */
@@ -561,10 +561,10 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 40
             <label class="form-label">Szolgáltatás *</label>
             <select class="form-select" id="bookService">
               <option value="">— Válassz szolgáltatást —</option>
-              <option value="klasszikus">Klasszikus Hajvágás — 3 500 Ft</option>
-              <option value="szakall">Szakáll Igazítás — 2 500 Ft</option>
-              <option value="csomag">Hajvágás + Szakáll — 5 500 Ft</option>
-              <option value="fade">Fade Vágás — 4 500 Ft</option>
+              <option value="klasszikus">Klasszikus Hajvágás — 8 000 Ft</option>
+              <option value="szakall">Szakáll Igazítás — 4 000 Ft</option>
+              <option value="csomag">Hajvágás + Szakáll — 10 500 Ft</option>
+              <option value="fade">Fade Vágás — 8 500 Ft</option>
               <option value="borotvalas">Klasszikus Borotválás — 3 000 Ft</option>
               <option value="gyerek">Gyerek Hajvágás — 2 500 Ft</option>
             </select>
@@ -849,7 +849,7 @@ window.addEventListener('scroll',()=>{
     if(!grid) return;
     Array.from(grid.children).forEach((child,i)=>{
       child.classList.add('reveal');
-      child.style.transitionDelay=(i*80)+'ms';
+      child.style.transitionDelay=Math.min(i*40,200)+'ms';
     });
   });
 
@@ -861,7 +861,7 @@ window.addEventListener('scroll',()=>{
         obs.unobserve(entry.target);
       }
     });
-  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+  },{threshold:0,rootMargin:'0px 0px 150px 0px'});
 
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 })();
