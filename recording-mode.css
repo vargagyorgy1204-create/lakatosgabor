@@ -1,0 +1,69 @@
+/* ═══════════════════════════════════════════════════════════════════
+   RECORDING MODE — deterministic, uniform, short animation timing.
+
+   Activated by adding class="recording-mode" to <html> (see the inline
+   snippet at the top of <head> in index.html, and recording-mode.js).
+
+   Every rule here is scoped under html.recording-mode, so nothing here
+   changes anything for normal visitors. Safe to delete this file + its
+   <link> + recording-mode.js + the tiny inline activation snippet in
+   <head> to fully remove recording mode.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Hero letter-by-letter intro ─────────────────────────────────── */
+html.recording-mode .hero-letter{
+  animation-duration:.25s !important;
+  /* keep relative stagger order, just compressed ~6x */
+  animation-delay:calc(var(--letter-delay,0s) * 0.15) !important;
+}
+html.recording-mode .hero-actions{
+  animation-duration:.3s !important;
+  animation-delay:.3s !important;
+}
+html.recording-mode .social-btn{
+  animation-duration:.2s !important;
+}
+
+/* ── Scroll-reveal: collapse every duration to one short value ──────
+   Delays that come from the JS-assigned --gallery-delay / inline
+   transitionDelay stagger are intentionally NOT zeroed here — they're
+   scaled down in recording-mode.js so grids still stagger, just fast. */
+html.recording-mode .reveal,
+html.recording-mode .reveal.visible,
+html.recording-mode .about-photo.reveal.visible img,
+html.recording-mode .about-text.reveal.visible p,
+html.recording-mode .about-text.reveal.visible .stat-item,
+html.recording-mode .service-card.reveal.visible,
+html.recording-mode .gallery-item img,
+html.recording-mode .gallery-overlay,
+html.recording-mode .review-card.reveal,
+html.recording-mode .review-card.reveal.visible,
+html.recording-mode #reviews .review-card.reveal,
+html.recording-mode #reviews .review-card.reveal.visible{
+  transition-duration:.35s !important;
+  animation-duration:.35s !important;
+}
+
+/* Fixed (non-variable) stagger delays — scaled ~6x down to match. */
+html.recording-mode .about-text.reveal.visible p:nth-of-type(2){
+  animation-delay:75ms !important;
+}
+html.recording-mode .about-text.reveal.visible .stat-item:nth-child(2){
+  transition-delay:58ms !important;
+}
+html.recording-mode .about-text.reveal.visible .stat-item:nth-child(3){
+  transition-delay:117ms !important;
+}
+html.recording-mode .about-text.reveal.visible .stat-item:nth-child(4){
+  transition-delay:175ms !important;
+}
+
+/* Decorative-only sweeping light/shine effects: left as-is on purpose,
+   they're cosmetic and don't affect readability/settle time. If you'd
+   rather they also snap short, uncomment:
+html.recording-mode .about-photo.reveal.visible::before,
+html.recording-mode .service-card.reveal.visible::before,
+html.recording-mode .gallery-item.reveal.visible .gallery-overlay::after{
+  animation-duration:.35s !important;
+}
+*/

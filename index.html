@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lakatos Gábor — Barber Budapest</title>
+<!-- Recording mode: activate with ?record=1 in the URL or localStorage.recordMode='1'.
+     Runs first/inline so html.recording-mode is set before first paint (no flash of
+     normal timing). Safe to delete this snippet + recording-mode.css + recording-mode.js
+     to fully remove recording mode; normal browsing is unaffected either way. -->
+<script>
+(function(){
+  try{
+    var qs=new URLSearchParams(location.search);
+    var on=qs.get('record')==='1'||localStorage.getItem('recordMode')==='1';
+    if(on) document.documentElement.classList.add('recording-mode');
+  }catch(e){}
+})();
+</script>
+<link rel="stylesheet" href="recording-mode.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- Poppins for modern logo -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
@@ -690,6 +704,11 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:20px 40
   <div class="footer-copy">© 2026 Lakatos Gábor · <a href="https://varbro.pro" target="_blank">Made by VarBro</a> · Minden jog fenntartva</div>
 </footer>
 
+<!-- Recording mode automation hooks (window.__heroReady / __revealSection / __forceRevealAll).
+     No effect unless <html> has class "recording-mode" — see the snippet at the top of <head>.
+     Safe to delete this line + recording-mode.js + recording-mode.css + that head snippet. -->
+<script src="recording-mode.js"></script>
+
 <script>
 // ─── CALENDAR ───────────────────────────────────────────
 const MONTHS=['JANUÁR','FEBRUÁR','MÁRCIUS','ÁPRILIS','MÁJUS','JÚNIUS','JÚLIUS','AUGUSZTUS','SZEPTEMBER','OKTÓBER','NOVEMBER','DECEMBER'];
@@ -883,6 +902,11 @@ window.addEventListener('scroll',()=>{
     document.querySelectorAll(sel).forEach(el=>el.classList.add('reveal'));
   });
 
+  // Stagger step scale — recording-mode.js sets this to 1/6 when
+  // html.recording-mode is active (?record=1 / localStorage.recordMode),
+  // otherwise it's 1 (untouched) or undefined (script not loaded) → 1.
+  const staggerScale=window.__RECORDING_STAGGER_SCALE__||1;
+
   // Stagger delay for paired elements
   [
     ['.about-photo','.about-text'],
@@ -890,7 +914,7 @@ window.addEventListener('scroll',()=>{
   ].forEach(pair=>{
     pair.forEach((sel,i)=>{
       const el=document.querySelector(sel);
-      if(el) el.style.transitionDelay=(i*250)+'ms';
+      if(el) el.style.transitionDelay=(i*250*staggerScale)+'ms';
     });
   });
 
@@ -901,7 +925,7 @@ window.addEventListener('scroll',()=>{
     Array.from(grid.children).forEach((child,i)=>{
       child.classList.add('reveal');
       const delayStep=gridSel==='.gallery-grid'||gridSel==='.services-grid'||gridSel==='.reviews-scroll'?300:220;
-      child.style.setProperty('--gallery-delay',(i*delayStep)+'ms');
+      child.style.setProperty('--gallery-delay',(i*delayStep*staggerScale)+'ms');
     });
   });
 
